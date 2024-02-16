@@ -28,8 +28,12 @@ module.exports = class cartServices {
         }
     };
 
-    async getAllCart(body) {
+    async getAllCart(query,user) {
         try {
+            let body = { isDelete: false };
+            if (query.me === 'true') {
+                body.user = user._id
+            }
             let results = await Cart.find(body).populate('cartItem').populate({
                 path: 'user',
                 model: 'users',
@@ -48,6 +52,15 @@ module.exports = class cartServices {
         } catch (error) {
             console.log(error);
             return res.json({ message: "Server Error from cart services" })
+        }
+    };
+
+    async updatemanyCart(user, body) {
+        try {
+            return await Cart.updateMany({ user: user }, { $set: body }, { new: true });
+        } catch (error) {
+            console.log(error);
+            return res.json({ message: "Ineternal Server Error from cart Service" });
         }
     };
 };
