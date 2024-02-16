@@ -3,11 +3,13 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
+
 const Admin = require('./routes/adminRoute/admin.routes');
 const User = require('./routes/userRoute/user.routes');
 const userProduct = require('./routes/userRoute/product.user.routes');
 const adminProduct = require('./routes/adminRoute/product.admin.routes');
 const Favorite = require('./routes/userRoute/favorite.user.routes');
+const Cart = require('./routes/userRoute/cart.user.routes');
 
 const port = process.env.PORT;
 const dbUrl = process.env.MONGO_URL;
@@ -20,6 +22,7 @@ app.use('/api/admin/product',adminProduct);
 app.use('/api/user', User);
 app.use('/api/user/product',userProduct);
 app.use('/api/user/favorite',Favorite);
+app.use('/api/user/cart',Cart);
 
 
 app.listen(port, () => {
