@@ -15,15 +15,15 @@ exports.createOrder = async (req,res)=>{
             quantity: item.quantity,
             price: item.cartItem.productPrice
         }));
-        console.log(orderItem);
+        // console.log(orderItem);
         let totalPrice = orderItem.reduce((total,item)=>(total+= (item.quantity * item.price)),0);
-        console.log(totalPrice);
+        // console.log(totalPrice);
         let newOrder = {
             user: req.user._id,
             items: orderItem,
             totalAmount:totalPrice 
         };
-        console.log(newOrder);
+        // console.log(newOrder);
         let order = await orderService.addToOrder(newOrder);
         await cartService.updatemanyCart(req.user._id,{isDelete: true});
         return res.json({order, message: "Order Succesfully Done"});
@@ -36,6 +36,20 @@ exports.createOrder = async (req,res)=>{
 exports.getOrder = async (req,res)=>{
     try {
         let order = await orderService.getOrder(req.body.orderID,{isDelete: false});
+        if (!order) {
+            return res.json({message: "Order is not found from this USER"});
+        };
+        return res.json({order});
+    } catch (error) {
+        console.log(error);
+        return res.json({message: "Server Error from order user controller"});
+    };
+};
+
+exports.getOrderById = async (req,res)=>{
+    try {
+        let order = await orderService.getOrderById(req.body.orderID);
+        // console.log(order);
         if (!order) {
             return res.json({message: "Order is not found from this USER"});
         };

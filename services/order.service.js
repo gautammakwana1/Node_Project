@@ -19,6 +19,17 @@ module.exports = class orderServices {
         }
     };
 
+    async getOrderById(id) {
+        try {
+            let results = await Order.findById(id);
+            console.log(results);
+            return results
+        } catch (error) {
+            console.log(error);
+            return res.json({ message: "Server Error from order services" });
+        }
+    };
+
     async getAllOrder(body) {
         try {
             return await Order.find(body);
