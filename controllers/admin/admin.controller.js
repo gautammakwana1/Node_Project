@@ -17,7 +17,7 @@ exports.registerAdmin = async (req, res) => {
         let hashpassword = await bcrypt.hash(req.body.password, 10);
         // console.log(hashpassword);
         user = await userService.addNewUser({ ...req.body, password: hashpassword, isAdmin: true });
-        return res.json({ message: "New User Registration successful" });
+        return res.json({user, message: "New User Registration successful" });
     } catch (error) {
         console.log(error);
         return res.json({ message: "Server Error from admin controller" });
