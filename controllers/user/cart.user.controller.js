@@ -20,7 +20,7 @@ exports.addToCart = async (req,res)=>{
 
 exports.getCart = async(req,res)=>{
     try {
-        let cart = await cartServices.getAllCart({user: req.user._id,isDelete: false});
+        let cart = await cartServices.getAllCart(req.query, req.user);
         console.log(cart);
         if (!cart) {
             return res.json({message: "Cart Item is not found..Please try again"});
