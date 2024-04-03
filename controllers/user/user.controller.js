@@ -80,7 +80,7 @@ exports.updateUser = async (req, res) => {
             // console.log(req.file);
             req.body.profileImage = req.file.path.replace('\\', '/');
         }
-        console.log(req.body.profileImage);
+        // console.log(req.body.profileImage);
         User = await userService.updateUser(User._id, { ...req.body });
         return res.json({ User, message: "User Updated succesfully" });
     } catch (error) {
@@ -92,7 +92,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
         let User = await userService.getUserById(req.user._id);
-        console.log(User);
+        // console.log(User);
         if (!User) {
             return res.json({ message: "User is not found.. Please try again" });
         };
